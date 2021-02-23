@@ -26,19 +26,12 @@ class PostSpider(scrapy.Spider):
                     }
                 else:
                     data_split = data.split("https", 1)
-                    snippet = data_split[0].split("https")
+                    snippet = data_split
                     yield {
                         'title': post.css('h4 a::text').get(),
                         'url': post.css('h4 a::attr(href)').get(),
-                        'snippet': snippet.strip()
+                        'snippet': snippet[0].strip()
                     }
+
             else:
-                yield {
-                    'title': post.css('h4 a::text').get(),
-                    'url': post.css('h4 a::attr(href)').get(),
-                }
-        # next_page = response.css('h4 a::attr(href)').get()
-        # if next_page is not None:
-        #     next_page = response.urljoin(next_page)
-        #     print("printing page", next_page)
-        #     yield scrapy.Request(next_page, callback=self.parsenext)
+                pass
