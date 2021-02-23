@@ -7,10 +7,6 @@ class NewsSpider(scrapy.Spider):
         "https://seekingalpha.com/market-news",
     ]
 
-    def parsenext(self, response):
-        for news in response.css('div._b40cf-r8eI2'):
-            print("news", news)
-
     def parse(self, response):
         for news in response.css('li.item'):
             data = news.css('div.tiny-share-widget::attr(data-tweet)').get()
@@ -32,6 +28,5 @@ class NewsSpider(scrapy.Spider):
                         'url': news.css('h4 a::attr(href)').get(),
                         'snippet': snippet[0].strip()
                     }
-
             else:
                 pass
